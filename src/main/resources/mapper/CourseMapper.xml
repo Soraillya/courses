@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.demo.mbg.mapper.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.sora.demo.mbg.model.Course">
+    <id column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
+    <result column="classroom_id" jdbcType="VARCHAR" property="classroomId" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="course_image" jdbcType="VARCHAR" property="courseImage" />
+    <result column="course_start_date" jdbcType="TIMESTAMP" property="courseStartDate" />
+    <result column="course_term" jdbcType="INTEGER" property="courseTerm" />
+    <result column="course_number_limit" jdbcType="VARCHAR" property="courseNumberLimit" />
+    <result column="course_price" jdbcType="DECIMAL" property="coursePrice" />
+    <result column="course_vip_price" jdbcType="DECIMAL" property="courseVipPrice" />
+    <result column="course_status" jdbcType="INTEGER" property="courseStatus" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.sora.demo.mbg.model.Course">
+    <result column="course_description" jdbcType="LONGVARCHAR" property="courseDescription" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    course_id, teacher_id, classroom_id, course_name, course_image, course_start_date, 
+    course_term, course_number_limit, course_price, course_vip_price, course_status
+  </sql>
+  <sql id="Blob_Column_List">
+    course_description
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.sora.demo.mbg.model.CourseExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.sora.demo.mbg.model.CourseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from course
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sora.demo.mbg.model.CourseExample">
+    delete from course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sora.demo.mbg.model.Course">
+    insert into course (course_id, teacher_id, classroom_id, 
+      course_name, course_image, course_start_date, 
+      course_term, course_number_limit, course_price, 
+      course_vip_price, course_status, course_description
+      )
+    values (#{courseId,jdbcType=INTEGER}, #{teacherId,jdbcType=VARCHAR}, #{classroomId,jdbcType=VARCHAR}, 
+      #{courseName,jdbcType=VARCHAR}, #{courseImage,jdbcType=VARCHAR}, #{courseStartDate,jdbcType=TIMESTAMP}, 
+      #{courseTerm,jdbcType=INTEGER}, #{courseNumberLimit,jdbcType=VARCHAR}, #{coursePrice,jdbcType=DECIMAL}, 
+      #{courseVipPrice,jdbcType=DECIMAL}, #{courseStatus,jdbcType=INTEGER}, #{courseDescription,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sora.demo.mbg.model.Course">
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="teacherId != null">
+        teacher_id,
+      </if>
+      <if test="classroomId != null">
+        classroom_id,
+      </if>
+      <if test="courseName != null">
+        course_name,
+      </if>
+      <if test="courseImage != null">
+        course_image,
+      </if>
+      <if test="courseStartDate != null">
+        course_start_date,
+      </if>
+      <if test="courseTerm != null">
+        course_term,
+      </if>
+      <if test="courseNumberLimit != null">
+        course_number_limit,
+      </if>
+      <if test="coursePrice != null">
+        course_price,
+      </if>
+      <if test="courseVipPrice != null">
+        course_vip_price,
+      </if>
+      <if test="courseStatus != null">
+        course_status,
+      </if>
+      <if test="courseDescription != null">
+        course_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomId != null">
+        #{classroomId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null">
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseImage != null">
+        #{courseImage,jdbcType=VARCHAR},
+      </if>
+      <if test="courseStartDate != null">
+        #{courseStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="courseTerm != null">
+        #{courseTerm,jdbcType=INTEGER},
+      </if>
+      <if test="courseNumberLimit != null">
+        #{courseNumberLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="coursePrice != null">
+        #{coursePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="courseVipPrice != null">
+        #{courseVipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="courseStatus != null">
+        #{courseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="courseDescription != null">
+        #{courseDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sora.demo.mbg.model.CourseExample" resultType="java.lang.Long">
+    select count(*) from course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update course
+    <set>
+      <if test="record.courseId != null">
+        course_id = #{record.courseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null">
+        teacher_id = #{record.teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classroomId != null">
+        classroom_id = #{record.classroomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseName != null">
+        course_name = #{record.courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseImage != null">
+        course_image = #{record.courseImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseStartDate != null">
+        course_start_date = #{record.courseStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.courseTerm != null">
+        course_term = #{record.courseTerm,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseNumberLimit != null">
+        course_number_limit = #{record.courseNumberLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coursePrice != null">
+        course_price = #{record.coursePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.courseVipPrice != null">
+        course_vip_price = #{record.courseVipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.courseStatus != null">
+        course_status = #{record.courseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseDescription != null">
+        course_description = #{record.courseDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update course
+    set course_id = #{record.courseId,jdbcType=INTEGER},
+      teacher_id = #{record.teacherId,jdbcType=VARCHAR},
+      classroom_id = #{record.classroomId,jdbcType=VARCHAR},
+      course_name = #{record.courseName,jdbcType=VARCHAR},
+      course_image = #{record.courseImage,jdbcType=VARCHAR},
+      course_start_date = #{record.courseStartDate,jdbcType=TIMESTAMP},
+      course_term = #{record.courseTerm,jdbcType=INTEGER},
+      course_number_limit = #{record.courseNumberLimit,jdbcType=VARCHAR},
+      course_price = #{record.coursePrice,jdbcType=DECIMAL},
+      course_vip_price = #{record.courseVipPrice,jdbcType=DECIMAL},
+      course_status = #{record.courseStatus,jdbcType=INTEGER},
+      course_description = #{record.courseDescription,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update course
+    set course_id = #{record.courseId,jdbcType=INTEGER},
+      teacher_id = #{record.teacherId,jdbcType=VARCHAR},
+      classroom_id = #{record.classroomId,jdbcType=VARCHAR},
+      course_name = #{record.courseName,jdbcType=VARCHAR},
+      course_image = #{record.courseImage,jdbcType=VARCHAR},
+      course_start_date = #{record.courseStartDate,jdbcType=TIMESTAMP},
+      course_term = #{record.courseTerm,jdbcType=INTEGER},
+      course_number_limit = #{record.courseNumberLimit,jdbcType=VARCHAR},
+      course_price = #{record.coursePrice,jdbcType=DECIMAL},
+      course_vip_price = #{record.courseVipPrice,jdbcType=DECIMAL},
+      course_status = #{record.courseStatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sora.demo.mbg.model.Course">
+    update course
+    <set>
+      <if test="teacherId != null">
+        teacher_id = #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomId != null">
+        classroom_id = #{classroomId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null">
+        course_name = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseImage != null">
+        course_image = #{courseImage,jdbcType=VARCHAR},
+      </if>
+      <if test="courseStartDate != null">
+        course_start_date = #{courseStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="courseTerm != null">
+        course_term = #{courseTerm,jdbcType=INTEGER},
+      </if>
+      <if test="courseNumberLimit != null">
+        course_number_limit = #{courseNumberLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="coursePrice != null">
+        course_price = #{coursePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="courseVipPrice != null">
+        course_vip_price = #{courseVipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="courseStatus != null">
+        course_status = #{courseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="courseDescription != null">
+        course_description = #{courseDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sora.demo.mbg.model.Course">
+    update course
+    set teacher_id = #{teacherId,jdbcType=VARCHAR},
+      classroom_id = #{classroomId,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
+      course_image = #{courseImage,jdbcType=VARCHAR},
+      course_start_date = #{courseStartDate,jdbcType=TIMESTAMP},
+      course_term = #{courseTerm,jdbcType=INTEGER},
+      course_number_limit = #{courseNumberLimit,jdbcType=VARCHAR},
+      course_price = #{coursePrice,jdbcType=DECIMAL},
+      course_vip_price = #{courseVipPrice,jdbcType=DECIMAL},
+      course_status = #{courseStatus,jdbcType=INTEGER},
+      course_description = #{courseDescription,jdbcType=LONGVARCHAR}
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sora.demo.mbg.model.Course">
+    update course
+    set teacher_id = #{teacherId,jdbcType=VARCHAR},
+      classroom_id = #{classroomId,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
+      course_image = #{courseImage,jdbcType=VARCHAR},
+      course_start_date = #{courseStartDate,jdbcType=TIMESTAMP},
+      course_term = #{courseTerm,jdbcType=INTEGER},
+      course_number_limit = #{courseNumberLimit,jdbcType=VARCHAR},
+      course_price = #{coursePrice,jdbcType=DECIMAL},
+      course_vip_price = #{courseVipPrice,jdbcType=DECIMAL},
+      course_status = #{courseStatus,jdbcType=INTEGER}
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册|在线购买课程系统</title>
+    <link rel="stylesheet" th:href="@{/Semantic-UI-CSS-master/semantic.min.css}">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script th:src="@{/Semantic-UI-CSS-master/semantic.min.js}"></script>
+</head>
+<body>
+<form class="ui form">
+    <div class="field">
+        <label>姓名</label>
+        <input type="text" name="teacher_name" placeholder="姓名">
+    </div>
+    <div class="field">
+        <label>手机号码</label>
+        <input type="tel" name="teacher_phone" placeholder="手机号码">
+    </div>
+    <div class="field">
+        <label>邮箱地址</label>
+        <input type="email" name="teacher_email" placeholder="邮箱地址">
+    </div>
+    <div class="field">
+        <label>个人描述</label>
+        <input type="text" name="teacher_description" placeholder="手机号码">
+    </div>
+    <div class="field">
+        <div class="ui checkbox">
+            <input type="checkbox" tabindex="0" class="hidden">
+            <label>我同意条款和条件</label>
+        </div>
+    </div>
+    <button class="ui button" type="submit">提交</button>
+</form>
+
+</body>
+</html>

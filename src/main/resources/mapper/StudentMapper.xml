@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.demo.mbg.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.sora.demo.mbg.model.Student">
+    <id column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="student_image" jdbcType="VARCHAR" property="studentImage" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="student_gender" jdbcType="INTEGER" property="studentGender" />
+    <result column="student_phone" jdbcType="VARCHAR" property="studentPhone" />
+    <result column="student_email" jdbcType="VARCHAR" property="studentEmail" />
+    <result column="student_account_balance" jdbcType="VARCHAR" property="studentAccountBalance" />
+    <result column="student_payment_password" jdbcType="VARCHAR" property="studentPaymentPassword" />
+    <result column="student_vip_status" jdbcType="INTEGER" property="studentVipStatus" />
+    <result column="student_vip_time" jdbcType="TIMESTAMP" property="studentVipTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    student_id, user_id, student_image, student_name, student_gender, student_phone, 
+    student_email, student_account_balance, student_payment_password, student_vip_status, 
+    student_vip_time
+  </sql>
+  <select id="selectByExample" parameterType="com.sora.demo.mbg.model.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sora.demo.mbg.model.StudentExample">
+    delete from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sora.demo.mbg.model.Student">
+    insert into student (student_id, user_id, student_image, 
+      student_name, student_gender, student_phone, 
+      student_email, student_account_balance, student_payment_password, 
+      student_vip_status, student_vip_time)
+    values (#{studentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{studentImage,jdbcType=VARCHAR}, 
+      #{studentName,jdbcType=VARCHAR}, #{studentGender,jdbcType=INTEGER}, #{studentPhone,jdbcType=VARCHAR}, 
+      #{studentEmail,jdbcType=VARCHAR}, #{studentAccountBalance,jdbcType=VARCHAR}, #{studentPaymentPassword,jdbcType=VARCHAR}, 
+      #{studentVipStatus,jdbcType=INTEGER}, #{studentVipTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sora.demo.mbg.model.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="studentImage != null">
+        student_image,
+      </if>
+      <if test="studentName != null">
+        student_name,
+      </if>
+      <if test="studentGender != null">
+        student_gender,
+      </if>
+      <if test="studentPhone != null">
+        student_phone,
+      </if>
+      <if test="studentEmail != null">
+        student_email,
+      </if>
+      <if test="studentAccountBalance != null">
+        student_account_balance,
+      </if>
+      <if test="studentPaymentPassword != null">
+        student_payment_password,
+      </if>
+      <if test="studentVipStatus != null">
+        student_vip_status,
+      </if>
+      <if test="studentVipTime != null">
+        student_vip_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="studentImage != null">
+        #{studentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentGender != null">
+        #{studentGender,jdbcType=INTEGER},
+      </if>
+      <if test="studentPhone != null">
+        #{studentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEmail != null">
+        #{studentEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="studentAccountBalance != null">
+        #{studentAccountBalance,jdbcType=VARCHAR},
+      </if>
+      <if test="studentPaymentPassword != null">
+        #{studentPaymentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentVipStatus != null">
+        #{studentVipStatus,jdbcType=INTEGER},
+      </if>
+      <if test="studentVipTime != null">
+        #{studentVipTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sora.demo.mbg.model.StudentExample" resultType="java.lang.Long">
+    select count(*) from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update student
+    <set>
+      <if test="record.studentId != null">
+        student_id = #{record.studentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentImage != null">
+        student_image = #{record.studentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentName != null">
+        student_name = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentGender != null">
+        student_gender = #{record.studentGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentPhone != null">
+        student_phone = #{record.studentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentEmail != null">
+        student_email = #{record.studentEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentAccountBalance != null">
+        student_account_balance = #{record.studentAccountBalance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentPaymentPassword != null">
+        student_payment_password = #{record.studentPaymentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentVipStatus != null">
+        student_vip_status = #{record.studentVipStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentVipTime != null">
+        student_vip_time = #{record.studentVipTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update student
+    set student_id = #{record.studentId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      student_image = #{record.studentImage,jdbcType=VARCHAR},
+      student_name = #{record.studentName,jdbcType=VARCHAR},
+      student_gender = #{record.studentGender,jdbcType=INTEGER},
+      student_phone = #{record.studentPhone,jdbcType=VARCHAR},
+      student_email = #{record.studentEmail,jdbcType=VARCHAR},
+      student_account_balance = #{record.studentAccountBalance,jdbcType=VARCHAR},
+      student_payment_password = #{record.studentPaymentPassword,jdbcType=VARCHAR},
+      student_vip_status = #{record.studentVipStatus,jdbcType=INTEGER},
+      student_vip_time = #{record.studentVipTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sora.demo.mbg.model.Student">
+    update student
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="studentImage != null">
+        student_image = #{studentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentGender != null">
+        student_gender = #{studentGender,jdbcType=INTEGER},
+      </if>
+      <if test="studentPhone != null">
+        student_phone = #{studentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEmail != null">
+        student_email = #{studentEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="studentAccountBalance != null">
+        student_account_balance = #{studentAccountBalance,jdbcType=VARCHAR},
+      </if>
+      <if test="studentPaymentPassword != null">
+        student_payment_password = #{studentPaymentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentVipStatus != null">
+        student_vip_status = #{studentVipStatus,jdbcType=INTEGER},
+      </if>
+      <if test="studentVipTime != null">
+        student_vip_time = #{studentVipTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sora.demo.mbg.model.Student">
+    update student
+    set user_id = #{userId,jdbcType=INTEGER},
+      student_image = #{studentImage,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      student_gender = #{studentGender,jdbcType=INTEGER},
+      student_phone = #{studentPhone,jdbcType=VARCHAR},
+      student_email = #{studentEmail,jdbcType=VARCHAR},
+      student_account_balance = #{studentAccountBalance,jdbcType=VARCHAR},
+      student_payment_password = #{studentPaymentPassword,jdbcType=VARCHAR},
+      student_vip_status = #{studentVipStatus,jdbcType=INTEGER},
+      student_vip_time = #{studentVipTime,jdbcType=TIMESTAMP}
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+</mapper>

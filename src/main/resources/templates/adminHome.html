@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员|在线购买课程系统|首页</title>
+    <link rel="stylesheet" th:href="@{/Semantic-UI-CSS-master/semantic.min.css}">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script th:src="@{/Semantic-UI-CSS-master/semantic.min.js}"></script>
+    <style type="text/css">
+        .masthead.segment {
+            min-height: 700px;
+            padding: 1em 0em;
+        }
+        .masthead .logo.item img {
+            margin-right: 1em;
+        }
+        .masthead .ui.menu .ui.button {
+            margin-left: 0.5em;
+        }
+        .masthead h1.ui.header {
+            margin-top: 3em;
+            margin-bottom: 0em;
+            font-size: 4em;
+            font-weight: normal;
+        }
+        .masthead h2 {
+            font-size: 1.7em;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="ui inverted vertical masthead center aligned segment">
+        <div class="ui fixed inverted menu">
+            <div class="ui container">
+                <a href="test" class="header item">[[${username}]]</a>
+                <div class="ui simple dropdown item">
+                    课程管理 <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="adminHome.html">所有课程</a>
+                        <a class="item" href="adminHome.html">添加课程</a>
+                        <a class="item" href="adminHome.html">修改课程</a>
+                        <div class="divider"></div>
+                        <div class="header">标题项</div>
+                        <div class="item">
+                            <i class="dropdown icon"></i>
+                            子菜单
+                            <div class="menu">
+                                <a class="item" href="adminHome.html">链接选项</a>
+                                <a class="item" href="adminHome.html">链接选项</a>
+                            </div>
+                        </div>
+                        <a class="item" href="adminHome.html">链接选项</a>
+                    </div>
+                </div>
+                <a href="adminHome.html" class="item">课程退款管理</a>
+                <div class="right menu">
+                    <a href="adminHome.html" class="item">退出</a>
+                </div>
+            </div>
+        </div>
+        <div class="ui text container">
+            <h1 class="ui inverted header">
+                在线购买课程系统
+            </h1>
+            <h2>后台管理</h2>
+        </div>
+    </div>
+
+</body>
+</html>

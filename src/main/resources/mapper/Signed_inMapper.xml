@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.demo.mbg.mapper.Signed_inMapper">
+  <resultMap id="BaseResultMap" type="com.sora.demo.mbg.model.Signed_in">
+    <id column="signed_in_id" jdbcType="INTEGER" property="signedInId" />
+    <result column="sign_in_id" jdbcType="INTEGER" property="signInId" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="signed_in_time" jdbcType="TIMESTAMP" property="signedInTime" />
+    <result column="signed_in_status" jdbcType="VARCHAR" property="signedInStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    signed_in_id, sign_in_id, student_id, signed_in_time, signed_in_status
+  </sql>
+  <select id="selectByExample" parameterType="com.sora.demo.mbg.model.Signed_inExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from signed_in
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from signed_in
+    where signed_in_id = #{signedInId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from signed_in
+    where signed_in_id = #{signedInId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sora.demo.mbg.model.Signed_inExample">
+    delete from signed_in
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sora.demo.mbg.model.Signed_in">
+    insert into signed_in (signed_in_id, sign_in_id, student_id, 
+      signed_in_time, signed_in_status)
+    values (#{signedInId,jdbcType=INTEGER}, #{signInId,jdbcType=INTEGER}, #{studentId,jdbcType=VARCHAR}, 
+      #{signedInTime,jdbcType=TIMESTAMP}, #{signedInStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sora.demo.mbg.model.Signed_in">
+    insert into signed_in
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="signedInId != null">
+        signed_in_id,
+      </if>
+      <if test="signInId != null">
+        sign_in_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="signedInTime != null">
+        signed_in_time,
+      </if>
+      <if test="signedInStatus != null">
+        signed_in_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="signedInId != null">
+        #{signedInId,jdbcType=INTEGER},
+      </if>
+      <if test="signInId != null">
+        #{signInId,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="signedInTime != null">
+        #{signedInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signedInStatus != null">
+        #{signedInStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sora.demo.mbg.model.Signed_inExample" resultType="java.lang.Long">
+    select count(*) from signed_in
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update signed_in
+    <set>
+      <if test="record.signedInId != null">
+        signed_in_id = #{record.signedInId,jdbcType=INTEGER},
+      </if>
+      <if test="record.signInId != null">
+        sign_in_id = #{record.signInId,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentId != null">
+        student_id = #{record.studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signedInTime != null">
+        signed_in_time = #{record.signedInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.signedInStatus != null">
+        signed_in_status = #{record.signedInStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update signed_in
+    set signed_in_id = #{record.signedInId,jdbcType=INTEGER},
+      sign_in_id = #{record.signInId,jdbcType=INTEGER},
+      student_id = #{record.studentId,jdbcType=VARCHAR},
+      signed_in_time = #{record.signedInTime,jdbcType=TIMESTAMP},
+      signed_in_status = #{record.signedInStatus,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sora.demo.mbg.model.Signed_in">
+    update signed_in
+    <set>
+      <if test="signInId != null">
+        sign_in_id = #{signInId,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="signedInTime != null">
+        signed_in_time = #{signedInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signedInStatus != null">
+        signed_in_status = #{signedInStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where signed_in_id = #{signedInId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sora.demo.mbg.model.Signed_in">
+    update signed_in
+    set sign_in_id = #{signInId,jdbcType=INTEGER},
+      student_id = #{studentId,jdbcType=VARCHAR},
+      signed_in_time = #{signedInTime,jdbcType=TIMESTAMP},
+      signed_in_status = #{signedInStatus,jdbcType=VARCHAR}
+    where signed_in_id = #{signedInId,jdbcType=INTEGER}
+  </update>
+</mapper>
